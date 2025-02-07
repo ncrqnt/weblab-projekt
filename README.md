@@ -93,6 +93,7 @@ Als Manager kann ich Artist Overview Seiten der mir zugewiesene Künstler\*innen
 **Akzeptanzkriterien**
 
 - Artist Overview können mit 0-10 Streaming-Links (als Icon) ergänzt werden.
+- Artist Overview kann mit einem Cover-/Profilbild ergänzt werden.
 - Nur Benutzer\*innen mit der Rolle 'Manager' können Artist Overview Seiten bearbeiten.
 - Es können nur Seiten bearbeitet werden, sofern ihnen die entsprechenden Künstler\*innen zugewiesen wurden.
 
