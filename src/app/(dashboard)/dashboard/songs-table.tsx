@@ -7,6 +7,9 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { Song } from "@/app/(dashboard)/dashboard/song";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DashboardTabs, SongItem, SongsTableProps } from "@/lib/types";
+import { useEffect } from "react";
+
+let navHistory: string[] = ["/dashboard"];
 
 export function SongsTable({ data, tab }: {
     data: SongsTableProps;
@@ -25,6 +28,7 @@ export function SongsTable({ data, tab }: {
 
     if (tab === DashboardTabs.OWNED) {
         songsData = data.songs.filter(song => song.created_by === data.user);
+        count = songsData.length;
     }
     else {
         songsData = data.songs;
@@ -35,8 +39,23 @@ export function SongsTable({ data, tab }: {
     }
 
     function nextPage() {
-        router.push(`/?page=${ data.page + 1 }&limit=${ data.limit }`, { scroll: false });
+        let nextPage = +page + 1;
+        let newPath = `${pathname}?page=${ nextPage }&limit=${ limit }`;
+
+        if (navHistory[nextPage - 1] === newPath) {
+            router.forward();
+        }
+        else {
+            router.push(newPath, { scroll: false });
+            navHistory.push(newPath);
+        }
     }
+
+    useEffect(() => {
+        if (searchParams == null) {
+            router.replace(`${pathname}`, { scroll: false });
+        }
+    }, [tab])
 
     return (
         <Card>
@@ -75,9 +94,9 @@ export function SongsTable({ data, tab }: {
                     <div className="text-xs text-muted-foreground">
                         Showing{ ' ' }
                         <strong>
-                            { start + 1 }-{ end > data.totalSongs ? data.totalSongs : end + 1 }
+                            { start + 1 }-{ +end > count ? count : +end + 1 }
                         </strong>{ ' ' }
-                        of <strong>{ data.totalSongs }</strong> products
+                        of <strong>{ count }</strong> products
                     </div>
                     <div className="flex">
                         <Button
@@ -95,7 +114,7 @@ export function SongsTable({ data, tab }: {
                             variant="ghost"
                             size="sm"
                             type="submit"
-                            disabled={ end + 1 >= data.totalSongs }
+                            disabled={ +end + 1 >= count }
                         >
                             Next
                             <ChevronRight className="ml-2 h-4 w-4"/>
