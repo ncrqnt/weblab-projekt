@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { Tables } from "@/lib/db.types";
+import { SongItem } from "@/lib/types";
 
 export function Song({ song }: { song: SongItem }) {
     return (
