@@ -5,16 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Song } from "@/app/(dashboard)/dashboard/song";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DashboardTabs, SongItem, SongsTableProps } from "@/lib/types";
 
 export function SongsTable({ data, tab }: {
     data: SongsTableProps;
     tab: DashboardTabs;
 }) {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const page: number = Number(searchParams.get("page")) || 1;
+    const limit: number = Number(searchParams.get("limit") || 5);
+
     const router = useRouter();
-    const start = (data.page - 1) * data.limit;
-    const end = start + data.limit - 1;
+    const start = (+page - 1) * +limit;
+    const end = +start + +limit - 1;
+    let count = data.totalSongs;
     let songsData: SongItem[];
 
     if (tab === DashboardTabs.OWNED) {

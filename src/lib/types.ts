@@ -14,8 +14,6 @@ export type SongItem = {
 }
 
 export type SongsTableProps = {
-    page: number,
-    limit: number,
     songs: SongItem[],
     totalSongs: number,
     user: string

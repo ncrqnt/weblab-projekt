@@ -13,8 +13,8 @@ export default async function DashboardPage(
 ) {
     const supabase = await createClient();
     const { page = 1, limit = 5 } = await props.searchParams;
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
+    const start: number = (+page - 1) * +limit;
+    const end:number = +start + +limit - 1;
 
     // Check login
     const { data: { user } } = await supabase.auth.getUser();
@@ -32,8 +32,6 @@ export default async function DashboardPage(
 
     // Map song data
     const tableData: SongsTableProps = {
-        page: page,
-        limit: limit,
         songs: data || [],
         totalSongs: count || 0,
         user: userData.user_name,
