@@ -2,12 +2,11 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 import "../globals.css";
 import Providers from "@/components/providers";
-import { VercelLogo } from "@/components/icons";
 import {
     Home,
     LineChart,
     ListMusic,
-    MicVocal,
+    MicVocal, Music, Music2,
     Package,
     Package2,
     PanelLeft,
@@ -25,16 +24,16 @@ import { Toaster } from "@/components/ui/sonner";
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <Providers>
-            <main className="flex min-h-screen w-full flex-col items-center pl-14">
+            <main className="flex min-h-screen w-full flex-col items-center sm:pl-14">
                 <DesktopNav/>
-                <div className="flex-1 w-full flex flex-col gap-20 items-center">
-                    <header className="sticky top-0 w-full flex justify-center border-b border-b-foreground/10 h-16">
+                <div className="flex-1 w-full flex flex-col items-center bg-background">
+                    <header className="sticky top-0 w-full flex justify-center border-b border-b-foreground/10 h-16 bg-background z-50">
                         <div className="w-full flex justify-between items-center p-3 px-5 text-sm">
                             <div className="flex gap-5 items-center font-semibold">
                                 <MobileNav/>
                             </div>
                             <div className="flex gap-5 items-center font-semibold">
-                                <Link href={ "/public" }>Songlinks</Link>
+                                <span>Songlinks</span>
                             </div>
                             <div className="flex gap-5 items-center">
                                 <ThemeSwitcher/>
@@ -42,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                             </div>
                         </div>
                     </header>
-                    <div className="flex flex-col gap-20 max-w-full p-5 w-full items-stretch">
+                    <div className="flex flex-col max-w-full p-5 w-full items-stretch">
                         { children }
                     </div>
                 </div>
@@ -70,37 +69,29 @@ function DesktopNav() {
         <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
             <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
                 <Link
-                    href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs"
+                    href="/"
                     className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                 >
-                    <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110"/>
+                    <Music className="h-4 w-4 transition-all group-hover:scale-110"/>
                     <span className="sr-only">Acme Inc</span>
                 </Link>
-
-                <NavItem href="/dashboard" label="Songs">
-                    <ListMusic className="h-5 w-5"/>
-                </NavItem>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <NavItem href="/dashboard" label="Songs">
+                            <ListMusic className="h-5 w-5"/>
+                        </NavItem>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">Settings</TooltipContent>
+                </Tooltip>
 
                 <NavItem href="/dashboard/artists" label="Artists">
                     <MicVocal className="h-5 w-5"/>
                 </NavItem>
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-                <NavItem href="/dashboard/users" label="Users">
-                    <Users2 className="h-5 w-5"/>
+                <NavItem href="/dashboard/admin" label="Admin Area">
+                    <Settings className="h-5 w-5"/>
                 </NavItem>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Link
-                            href="/dashboard/settings"
-                            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                        >
-                            <Settings className="h-5 w-5"/>
-                            <span className="sr-only">Settings</span>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Settings</TooltipContent>
-                </Tooltip>
             </nav>
         </aside>
     );

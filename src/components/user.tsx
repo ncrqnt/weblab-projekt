@@ -46,11 +46,12 @@ export async function User() {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{userDb.user_name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link href="/dashboard/settings/reset-password">Reset Password</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {user ? (
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="justify-center">
                         <form action={signOutAction}>
                             <Button type="submit" variant={"outline"}>
                                 Sign out

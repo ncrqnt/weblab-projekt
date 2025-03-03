@@ -8,13 +8,15 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Laptop, Moon, Sun } from "lucide-react";
+import { Laptop, Loader, LoaderCircle, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { Spinner } from "@/components/icons";
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const ICON_SIZE = 16;
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -22,10 +24,17 @@ const ThemeSwitcher = () => {
   }, []);
 
   if (!mounted) {
-    return null;
+    return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size={ "sm" } disabled={ true }>
+              <LoaderCircle size={ ICON_SIZE } className="animate-spin" />
+              <span className="sr-only">Loading theme switcher...</span>
+            </Button>
+          </DropdownMenuTrigger>
+        </DropdownMenu>
+    );
   }
-
-  const ICON_SIZE = 16;
 
   return (
     <DropdownMenu>
