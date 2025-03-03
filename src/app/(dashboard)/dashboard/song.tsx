@@ -11,6 +11,29 @@ import {
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SongItem } from "@/lib/types";
+import Link from "next/link";
+import { deleteItem } from "@/app/(dashboard)/dashboard/actions";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+
+function deleteSong(id: string) {
+    try {
+        void deleteItem(id);
+        toast.success("Song deleted successfully.");
+    } catch (error: any) {
+        toast.error("Failed to delete song.", error.message);
+    }
+}
 
 export function Song({ song }: { song: SongItem }) {
     return (
@@ -26,11 +49,11 @@ export function Song({ song }: { song: SongItem }) {
             </TableCell>
             <TableCell className="font-medium">{ song.title }</TableCell>
             <TableCell>
-                {song.artists.map((artist: string, index: number) => (
-                    <Badge key={index} variant="outline" className="capitalize text-center">
+                { song.artists.map((artist: string, index: number) => (
+                    <Badge key={ index } variant="outline" className="capitalize text-center">
                         { artist }
                     </Badge>
-                ))}
+                )) }
             </TableCell>
             <TableCell className="hidden md:table-cell">{ song.album }</TableCell>
             <TableCell className="hidden md:table-cell">{ song.created_by }</TableCell>
@@ -42,23 +65,41 @@ export function Song({ song }: { song: SongItem }) {
                 }) : 'N/A' }
             </TableCell>
             <TableCell>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                            <MoreHorizontal className="h-4 w-4"/>
-                            <span className="sr-only">Toggle menu</span>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <form action="">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <AlertDialog>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button aria-haspopup="true" size="icon" variant="ghost">
+                                <MoreHorizontal className="h-4 w-4"/>
+                                <span className="sr-only">Toggle menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <Link href={ `/${ song.artists[0] }/${ song.id }` }>Open Song Page</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <Link href={ `/dashboard/edit/${ song.id }` } className="w-full">Edit</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <AlertDialogTrigger className="w-full">Delete</AlertDialogTrigger>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Delete '{ song.title }'</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete the song from the server.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction variant="destructive"
+                                               onClick={ () => deleteSong(song.id) }>Delete</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </TableCell>
         </TableRow>
     );

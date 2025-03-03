@@ -1,7 +1,7 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 import "../globals.css";
-import Providers from "@/app/(dashboard)/dashboard/providers";
+import Providers from "@/components/providers";
 import { VercelLogo } from "@/components/icons";
 import {
     Home,
@@ -18,8 +18,9 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { NavItem } from "@/app/(dashboard)/dashboard/nav-item";
-import { User } from "@/app/(dashboard)/dashboard/user";
+import { NavItem } from "@/components/nav-item";
+import { User } from "@/components/user";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     </p>
                 </footer>
             </main>
+            <Toaster />
         </Providers>
     );
 }
