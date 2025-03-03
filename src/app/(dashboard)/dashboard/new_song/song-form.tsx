@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import { CalendarIcon } from "lucide-react";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { generateSlug } from "@/utils/utils";
 import { SongItem } from "@/lib/types";
-import { revalidatePath } from "next/cache";
+import { useUserId } from "@/hooks/useUserId";
 
 const optionSchema = z.object({
     label: z.string(),
@@ -37,28 +37,9 @@ const songSchema = z.object({
 export default function SongForm({ song, edit = false }: { song?: SongItem, edit?: boolean }) {
     const supabase = createClient();
     const router = useRouter();
-    const pathname = usePathname();
     const [artists, setArtists] = useState<{ id: string; name: string }[]>([]);
-    const [userId, setUserId] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
-
-    const getUser = useCallback(async () => {
-        try {
-            setLoading(true);
-
-            const { data: { user }, error } = await supabase.auth.getUser();
-
-            if (error) throw error;
-
-            if (user) {
-                setUserId(user.id);
-            }
-        } catch (error) {
-            toast.error("Failed to fetch user");
-        } finally {
-            setLoading(false);
-        }
-    }, [supabase, userId]);
+    const { userId, loading: userLoading } = useUserId();
 
     const getArtists = useCallback(async () => {
         try {
@@ -82,7 +63,12 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
     }, [supabase, artists]);
 
     useEffect(() => {
-        void getUser();
+        if (!userLoading) {
+            setLoading(false);
+        }
+    }, [userLoading]);
+
+    useEffect(() => {
         void getArtists();
     }, []);
 

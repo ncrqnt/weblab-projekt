@@ -5,8 +5,6 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { Song } from "@/app/(dashboard)/dashboard/song";
 import { DashboardTabs, SongItem, SongsTableProps } from "@/lib/types";
 
-let navHistory: string[] = ["/dashboard"];
-
 export function SongsTable({ data, tab }: {
     data: SongsTableProps;
     tab: DashboardTabs;
@@ -15,7 +13,7 @@ export function SongsTable({ data, tab }: {
     let songsData: SongItem[] = data.songs;
 
     if (tab === DashboardTabs.OWNED) {
-        songsData = data.songs.filter(song => song.created_by === data.user);
+        songsData = data.songs.filter(song => song.created_by.id === data.user.id);
         count = data.totalOwned;
     }
 
@@ -35,12 +33,15 @@ export function SongsTable({ data, tab }: {
                                 <span className="sr-only">Image</span>
                             </TableHead>
                             <TableHead>Title</TableHead>
-                            <TableHead>Artist</TableHead>
+                            <TableHead className="hidden md:table-cell">Artist</TableHead>
                             <TableHead className="hidden md:table-cell">Album</TableHead>
                             <TableHead className="hidden md:table-cell">Created&nbsp;by</TableHead>
                             <TableHead className="hidden md:table-cell">Created&nbsp;at</TableHead>
                             <TableHead>
                                 <span className="sr-only">Actions</span>
+                            </TableHead>
+                            <TableHead>
+                                <span className="sr-only">Open Page</span>
                             </TableHead>
                         </TableRow>
                     </TableHeader>

@@ -8,7 +8,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { ExternalLink, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SongItem } from "@/lib/types";
 import Link from "next/link";
@@ -48,15 +48,15 @@ export function Song({ song }: { song: SongItem }) {
                 />
             </TableCell>
             <TableCell className="font-medium">{ song.title }</TableCell>
-            <TableCell>
-                { song.artists.map((artist: string, index: number) => (
+            <TableCell className="hidden md:table-cell">
+                { song.artists.map((artist: { id: string, name: string }, index: number) => (
                     <Badge key={ index } variant="outline" className="capitalize text-center">
-                        { artist }
+                        { artist.name }
                     </Badge>
                 )) }
             </TableCell>
             <TableCell className="hidden md:table-cell">{ song.album }</TableCell>
-            <TableCell className="hidden md:table-cell">{ song.created_by }</TableCell>
+            <TableCell className="hidden md:table-cell">{ song.created_by.name }</TableCell>
             <TableCell className="hidden md:table-cell">
                 { song.created_at ? new Date(song.created_at).toLocaleDateString("de-CH", {
                     year: "numeric",
@@ -75,9 +75,6 @@ export function Song({ song }: { song: SongItem }) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem asChild className="cursor-pointer">
-                                <Link href={ `/${ song.artists[0] }/${ song.id }` }>Open Song Page</Link>
-                            </DropdownMenuItem>
                             <DropdownMenuItem asChild className="cursor-pointer">
                                 <Link href={ `/dashboard/edit/${ song.id }` } className="w-full">Edit</Link>
                             </DropdownMenuItem>
@@ -100,6 +97,11 @@ export function Song({ song }: { song: SongItem }) {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
+            </TableCell>
+            <TableCell>
+                <Button aria-haspopup="false" size="icon" variant="ghost">
+                    <Link href={ `/${ song.artists[0].slug }/${ song.slug }` }><ExternalLink className="h-4 w-4"/></Link>
+                </Button>
             </TableCell>
         </TableRow>
     );

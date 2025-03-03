@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SongForm from "@/app/(dashboard)/dashboard/new_song/song-form";
 
 
@@ -8,12 +7,8 @@ export default async function NewSongPage() {
 
     const supabase = await createClient();
 
-    // Check login
+    // Get session data
     const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-        return redirect("/sign-in");
-    }
 
     return (
         <Card>

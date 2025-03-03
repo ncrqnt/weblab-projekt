@@ -10,16 +10,16 @@ import Link from "next/link";
 export default async function DashboardPage() {
     const supabase = await createClient();
 
-    // Check login
+    // Get session data
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        return redirect("/sign-in");
+        redirect(`/sign-in`);
     }
 
     // Query data
     const { data, error, count } = await supabase
-        .from('songs_dashboard')
+        .from('songs_data')
         .select(`*`, { count: "exact" })
         .order("created_at", { ascending: false }
         );
@@ -33,8 +33,8 @@ export default async function DashboardPage() {
     const tableData: SongsTableProps = {
         songs: data || [],
         totalSongs: count || 0,
-        totalOwned: data?.filter(song => song.created_by === userData.user_name).length || 0,
-        user: userData.user_name,
+        totalOwned: data?.filter(song => song.created_by.name === userData.user_name).length || 0,
+        user: { id: user.id, name: userData.user_name },
     }
 
     return (
