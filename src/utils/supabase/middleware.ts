@@ -32,6 +32,7 @@ export const updateSession = async (request: NextRequest) => {
             );
           },
         },
+        db: { schema: process.env.NEXT_PUBLIC_DATABASE_SCHEMA! }
       },
     );
 

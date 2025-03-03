@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { Database } from "@/lib/db.types";
 
 export const createClient = async () => {
   const cookieStore = await cookies();
@@ -24,7 +25,7 @@ export const createClient = async () => {
           }
         },
       },
-      db: { schema: process.env.DATABASE_SCHEMA! }
+      db: { schema: process.env.NEXT_PUBLIC_DATABASE_SCHEMA! }
     },
   );
 };

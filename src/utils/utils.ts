@@ -14,3 +14,12 @@ export function encodedRedirect(
 ) {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 }
+
+export function generateSlug(name: string): string {
+  return name
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove accents
+      .replace(/[^a-z0-9 ]/g, "") // Remove special characters
+      .trim()
+      .replace(/\s+/g, "-"); // Replace spaces with dashes
+}

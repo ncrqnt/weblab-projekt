@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { faker } from "@faker-js/faker/locale/en";
+import { generateSlug } from "@/utils/utils";
 
 const userIds = [
     '342276ae-4633-476f-b431-e963f30c6f54',
@@ -41,6 +42,7 @@ export async function GET() {
         await supabase.from('songs').insert({
             id: song.id,
             title: song.title,
+            slug: generateSlug(song.title),
             album: faker.helpers.arrayElement([null, faker.music.album()]),
             created_by: creator
         });
@@ -48,6 +50,7 @@ export async function GET() {
         await supabase.from('artists').insert({
             id: artist.id,
             name: artist.name,
+            slug: generateSlug(artist.name),
             created_by: creator
         });
     }
@@ -59,6 +62,7 @@ export async function GET() {
             const randArtist = faker.helpers.arrayElement(newArtists);
             await supabase.from('songs_artists').insert({
                 song_id: song.id,
+                song_title: song.title,
                 artist_id: randArtist.id
             });
         }

@@ -7,6 +7,31 @@ export type Json =
     | Json[]
 
 export type Database = {
+    graphql_public: {
+        Tables: {
+            [_ in never]: never
+        }
+        Views: {
+            [_ in never]: never
+        }
+        Functions: {
+            graphql: {
+                Args: {
+                    operationName?: string
+                    query?: string
+                    variables?: Json
+                    extensions?: Json
+                }
+                Returns: Json
+            }
+        }
+        Enums: {
+            [_ in never]: never
+        }
+        CompositeTypes: {
+            [_ in never]: never
+        }
+    }
     public: {
         Tables: {
             artist_links: {
@@ -219,6 +244,312 @@ export type Database = {
         }
         Enums: {
             [_ in never]: never
+        }
+        CompositeTypes: {
+            [_ in never]: never
+        }
+    }
+    testing: {
+        Tables: {
+            artist_links: {
+                Row: {
+                    artist_id: string | null
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    platform_name: Database["testing"]["Enums"]["platform_enum"]
+                    url: string
+                }
+                Insert: {
+                    artist_id?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    platform_name: Database["testing"]["Enums"]["platform_enum"]
+                    url: string
+                }
+                Update: {
+                    artist_id?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    platform_name?: Database["testing"]["Enums"]["platform_enum"]
+                    url?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "artist_links_artist_id_fkey"
+                        columns: ["artist_id"]
+                        isOneToOne: false
+                        referencedRelation: "artists"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "artist_links_created_by_fkey"
+                        columns: ["created_by"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            artist_managers: {
+                Row: {
+                    artist_id: string | null
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    user_id: string | null
+                }
+                Insert: {
+                    artist_id?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    user_id?: string | null
+                }
+                Update: {
+                    artist_id?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    user_id?: string | null
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "artist_managers_artist_id_fkey"
+                        columns: ["artist_id"]
+                        isOneToOne: false
+                        referencedRelation: "artists"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "artist_managers_created_by_fkey"
+                        columns: ["created_by"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "artist_managers_user_id_fkey"
+                        columns: ["user_id"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            artists: {
+                Row: {
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    name: string
+                    profile_picture: string | null
+                }
+                Insert: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    name: string
+                    profile_picture?: string | null
+                }
+                Update: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    name?: string
+                    profile_picture?: string | null
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "artists_created_by_fkey"
+                        columns: ["created_by"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            song_links: {
+                Row: {
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    platform_name: Database["testing"]["Enums"]["platform_enum"]
+                    song_id: string | null
+                    url: string
+                }
+                Insert: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    platform_name: Database["testing"]["Enums"]["platform_enum"]
+                    song_id?: string | null
+                    url: string
+                }
+                Update: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    platform_name?: Database["testing"]["Enums"]["platform_enum"]
+                    song_id?: string | null
+                    url?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "song_links_created_by_fkey"
+                        columns: ["created_by"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "song_links_song_id_fkey"
+                        columns: ["song_id"]
+                        isOneToOne: false
+                        referencedRelation: "songs"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "song_links_song_id_fkey"
+                        columns: ["song_id"]
+                        isOneToOne: false
+                        referencedRelation: "songs_dashboard"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            songs: {
+                Row: {
+                    album: string | null
+                    cover_image: string | null
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    release_date: string | null
+                    title: string
+                }
+                Insert: {
+                    album?: string | null
+                    cover_image?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    release_date?: string | null
+                    title: string
+                }
+                Update: {
+                    album?: string | null
+                    cover_image?: string | null
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    release_date?: string | null
+                    title?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "songs_created_by_fkey"
+                        columns: ["created_by"]
+                        isOneToOne: false
+                        referencedRelation: "users"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            songs_artists: {
+                Row: {
+                    artist_id: string
+                    id: string
+                    song_id: string
+                }
+                Insert: {
+                    artist_id: string
+                    id?: string
+                    song_id: string
+                }
+                Update: {
+                    artist_id?: string
+                    id?: string
+                    song_id?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "songs_artists_artist_id_fkey"
+                        columns: ["artist_id"]
+                        isOneToOne: false
+                        referencedRelation: "artists"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "songs_artists_song_id_fkey"
+                        columns: ["song_id"]
+                        isOneToOne: false
+                        referencedRelation: "songs"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "songs_artists_song_id_fkey"
+                        columns: ["song_id"]
+                        isOneToOne: false
+                        referencedRelation: "songs_dashboard"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            users: {
+                Row: {
+                    created_at: string | null
+                    created_by: string | null
+                    id: string
+                    role: Database["testing"]["Enums"]["role_enum"]
+                    user_name: string
+                }
+                Insert: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id: string
+                    role?: Database["testing"]["Enums"]["role_enum"]
+                    user_name?: string
+                }
+                Update: {
+                    created_at?: string | null
+                    created_by?: string | null
+                    id?: string
+                    role?: Database["testing"]["Enums"]["role_enum"]
+                    user_name?: string
+                }
+                Relationships: []
+            }
+        }
+        Views: {
+            songs_dashboard: {
+                Row: {
+                    album: string | null
+                    artists: string[] | null
+                    cover_image: string | null
+                    created_at: string | null
+                    created_by: string | null
+                    id: string | null
+                    title: string | null
+                }
+                Relationships: []
+            }
+        }
+        Functions: {
+            [_ in never]: never
+        }
+        Enums: {
+            platform_enum:
+                | "spotify"
+                | "apple_music"
+                | "youtube"
+                | "youtube_music"
+                | "amazon_music"
+                | "tidal"
+                | "deezer"
+            role_enum: "admin" | "manager" | "user"
         }
         CompositeTypes: {
             [_ in never]: never
