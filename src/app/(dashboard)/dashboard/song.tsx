@@ -25,6 +25,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 function deleteSong(id: string) {
     try {
@@ -64,44 +65,54 @@ export function Song({ song }: { song: SongItem }) {
                     day: "2-digit",
                 }) : 'N/A' }
             </TableCell>
-            <TableCell>
+            <TableCell className="text-right whitespace-nowrap">
                 <AlertDialog>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button aria-haspopup="true" size="icon" variant="ghost">
-                                <MoreHorizontal className="h-4 w-4"/>
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem asChild className="cursor-pointer">
-                                <Link href={ `/dashboard/edit/${ song.id }` } className="w-full">Edit</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild className="cursor-pointer">
-                                <AlertDialogTrigger className="w-full">Delete</AlertDialogTrigger>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Delete '{ song.title }'</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete the song from the server.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction variant="destructive"
-                                               onClick={ () => deleteSong(song.id) }>Delete</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
+                    <Tooltip>
+                        <DropdownMenu>
+                            <TooltipTrigger asChild>
+                            <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                    <MoreHorizontal className="h-4 w-4"/>
+                                    <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            </TooltipTrigger>
+                            <TooltipContent>Actions</TooltipContent>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem asChild className="cursor-pointer">
+                                    <Link href={ `/dashboard/edit/${ song.id }` } className="w-full">Edit</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild className="cursor-pointer">
+                                    <AlertDialogTrigger className="w-full">Delete</AlertDialogTrigger>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Delete '{ song.title }'</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete the song from the server.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction variant="destructive"
+                                                   onClick={ () => deleteSong(song.id) }>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </Tooltip>
                 </AlertDialog>
-            </TableCell>
-            <TableCell>
-                <Button aria-haspopup="false" size="icon" variant="ghost">
-                    <Link href={ `/${ song.artists[0].slug }/${ song.slug }` }><ExternalLink className="h-4 w-4"/></Link>
-                </Button>
+
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button aria-haspopup="false" size="icon" variant="ghost">
+                            <Link href={ `/${ song.artists[0].slug }/${ song.slug }` }><ExternalLink
+                                className="h-4 w-4"/></Link>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Open Page</TooltipContent>
+                </Tooltip>
             </TableCell>
         </TableRow>
     );

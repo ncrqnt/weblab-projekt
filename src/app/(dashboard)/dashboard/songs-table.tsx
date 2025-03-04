@@ -40,9 +40,6 @@ export function SongsTable({ data, tab }: {
                             <TableHead>
                                 <span className="sr-only">Actions</span>
                             </TableHead>
-                            <TableHead>
-                                <span className="sr-only">Open Page</span>
-                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
