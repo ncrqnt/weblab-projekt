@@ -1,7 +1,6 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 import "../globals.css";
-import Providers from "@/components/providers";
 import {
     Home,
     LineChart,
@@ -14,7 +13,7 @@ import {
     ShoppingCart,
     Users2
 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { NavItem } from "@/components/nav-item";
@@ -23,7 +22,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <Providers>
+        <TooltipProvider>
             <main className="flex min-h-screen w-full flex-col items-center sm:pl-14">
                 <DesktopNav/>
                 <div className="flex-1 w-full flex flex-col items-center bg-background">
@@ -36,7 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                                 <span>Songlinks</span>
                             </div>
                             <div className="flex gap-5 items-center">
-                                <ThemeSwitcher/>
+                                <ThemeSwitcher />
                                 <User/>
                             </div>
                         </div>
@@ -60,7 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 </footer>
             </main>
             <Toaster />
-        </Providers>
+        </TooltipProvider>
     );
 }
 

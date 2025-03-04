@@ -17,25 +17,27 @@ import { toast } from "sonner";
 import {
     Dialog,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import UserForm from "@/app/(dashboard)/dashboard/admin/user-form";
-
-function deleteUser(id: string) {
-    try {
-        // void deleteItem(id);
-        toast.success("Song deleted successfully.");
-    } catch (error: any) {
-        toast.error("Failed to delete song.", error.message);
-    }
-}
+import { useState } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function UsersTableItem({ user, currentUser }: { user: UserItem, currentUser: string }) {
+    const [open, setOpen] = useState(false);
+
+    function deleteUser(id: string) {
+        try {
+            // void deleteItem(id);
+            toast.success("Song deleted successfully.");
+        } catch (error: any) {
+            toast.error("Failed to delete song.", error.message);
+        }
+    }
+
     return (
         <TableRow>
             <TableCell className="font-medium">{ user.name }</TableCell>
@@ -50,47 +52,57 @@ export function UsersTableItem({ user, currentUser }: { user: UserItem, currentU
                 }) : 'N/A' }
             </TableCell>
             <TableCell className="text-right w-auto">
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                            <Edit className="h-4 w-4"/>
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Edit User</DialogTitle>
-                            <DialogDescription>
-                                Make changes to the user <code>{ user.name }</code> here.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <UserForm user={user} edit={true} />
-                    </DialogContent>
+                <Dialog open={ open } onOpenChange={ setOpen }>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <DialogTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                    <Edit className="h-4 w-4"/>
+                                </Button>
+                            </DialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>Edit</TooltipContent>
+                        <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                                <DialogTitle>Edit User</DialogTitle>
+                                <DialogDescription>
+                                    Make changes to the user <code>{ user.name }</code> here.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <UserForm user={ user } edit={ true } setOpen={ setOpen }/>
+                        </DialogContent>
+                    </Tooltip>
                 </Dialog>
                 <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                            className="hover:bg-destructive"
-                            disabled={user.id === currentUser}
-                        >
-                            <Trash2 className="h-4 w-4"/>
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Delete '{ user.name }'</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete the user from the server.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction variant="destructive"
-                                               onClick={ () => deleteUser(user.id) }>Delete</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                aria-haspopup="true"
+                                size="icon"
+                                variant="ghost"
+                                className="hover:bg-destructive"
+                                disabled={ user.id === currentUser }
+                            >
+                                <Trash2 className="h-4 w-4"/>
+                            </Button>
+                        </AlertDialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>Delete</TooltipContent>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Delete '{ user.name }'</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete the user from the server.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction variant="destructive"
+                                                   onClick={ () => deleteUser(user.id) }>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </Tooltip>
                 </AlertDialog>
             </TableCell>
         </TableRow>

@@ -1,20 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import { PlusCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { createAdminClient } from "@/utils/supabase/admin";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
 import { UsersTable } from "@/app/(dashboard)/dashboard/admin/users-table";
 import { type UserItem } from "@/lib/types";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import UserForm from "@/app/(dashboard)/dashboard/admin/user-form";
 
 const ROLE_LABELS: Record<string, string> = {
     admin: "Admin",
@@ -60,39 +47,6 @@ export default async function AdminPage() {
     }));
 
     return (
-        <>
-            <div className="flex items-center mb-2">
-                <div className="ml-auto flex items-center gap-2">
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button size="sm" className="h-8 gap-1" asChild>
-                                <Link href="#"><PlusCircle className="h-3.5 w-3.5"/>Add User</Link>
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Add new user</DialogTitle>
-                                <DialogDescription>
-                                    Create a new user.
-                                </DialogDescription>
-                            </DialogHeader>
-                            <UserForm edit={false} />
-                        </DialogContent>
-                    </Dialog>
-                </div>
-            </div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Users</CardTitle>
-                    <CardDescription>List of all users</CardDescription>
-                </CardHeader>
-                <CardContent><UsersTable users={ tableData } currentUser={ user!.id }/></CardContent>
-                <CardFooter>
-                    <div className="text-xs text-muted-foreground">
-                        Showing { ' ' } <strong>{ tableData.length }</strong> users
-                    </div>
-                </CardFooter>
-            </Card>
-        </>
+        <UsersTable users={ tableData } currentUser={ user!.id }/>
     );
 }
