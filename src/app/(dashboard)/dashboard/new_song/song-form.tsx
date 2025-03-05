@@ -135,7 +135,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                 const artistLinks = artistIds.map(
                     (artistId) => ({
                         song_id: song.id,
-                        song_title: values.title,
+                        song_slug: generateSlug(values.title),
                         artist_id: artistId,
                     }));
                 await supabase.from("songs_artists").insert(artistLinks);
@@ -161,7 +161,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                 const artistLinks = artistIds.map(
                     (artistId) => ({
                         song_id: songData.id,
-                        song_title: songData.title,
+                        song_slug: generateSlug(songData.title),
                         artist_id: artistId,
                     }));
                 await supabase.from("songs_artists").insert(artistLinks);
