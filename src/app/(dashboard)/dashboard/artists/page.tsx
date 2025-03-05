@@ -19,10 +19,6 @@ export default async function DashboardPage(
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) {
-        return redirect("/sign-in");
-    }
-
     let songs;
 
     return (

@@ -12,16 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Save, Trash2 } from "lucide-react";
 import { useUserId } from "@/hooks/useUserId";
-
-export const platformOptions = [
-    { label: "Spotify", value: "spotify", icon: "/icons/spotify.svg" },
-    { label: "Apple Music", value: "apple_music", icon: "/icons/apple_music.svg" },
-    { label: "YouTube", value: "youtube", icon: "/icons/youtube.svg" },
-    { label: "YouTube Music", value: "youtube_music", icon: "/icons/youtube_music.svg" },
-    { label: "Amazon Music", value: "amazon_music", icon: "/icons/amazon_music.svg" },
-    { label: "Tidal", value: "tidal", icon: "/icons/tidal.svg" },
-    { label: "Deezer", value: "deezer", icon: "/icons/deezer.svg" },
-];
+import { platforms } from "@/lib/platforms";
 
 interface SongLink {
     id: string;
@@ -44,6 +35,9 @@ export default function SongLinksForm({ songId, existingLinks }: { songId: strin
     const [editedLinks, setEditedLinks] = useState<Record<string, Partial<SongLink>>>({});
     const [usedPlatforms, setUsedPlatforms] = useState<string[]>(existingLinks.map(link => link.platform_name));
     const { userId, loading: userLoading } = useUserId();
+
+
+    const platformOptions = platforms;
 
     useEffect(() => {
         if (!userLoading) {
@@ -153,7 +147,7 @@ export default function SongLinksForm({ songId, existingLinks }: { songId: strin
                 const isEdited = !!editedLinks[link.id];
                 return (
                     <div key={ link.id } className="flex items-center gap-3 p-3 border rounded-lg">
-                        <img className="h-6 w-6 fill-white"
+                        <img className="h-6 w-6 dark:invert"
                              src={ platformOptions.find(p => p.value === link.platform_name)?.icon }
                              alt={ `${ platformOptions.find(p => p.value === link.platform_name)?.label } icon` }/>
                         <Input

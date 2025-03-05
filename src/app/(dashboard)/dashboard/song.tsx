@@ -107,7 +107,7 @@ export function Song({ song }: { song: SongItem }) {
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button aria-haspopup="false" size="icon" variant="ghost">
-                            <Link href={ `/${ song.artists[0].slug }/${ song.slug }` }><ExternalLink
+                            <Link href={ `/${ song.artists[0].slug }/${ song.slug }` } target="_blank"><ExternalLink
                                 className="h-4 w-4"/></Link>
                         </Button>
                     </TooltipTrigger>
