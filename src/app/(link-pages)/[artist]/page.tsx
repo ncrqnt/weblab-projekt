@@ -48,7 +48,7 @@ export default async function SongPage({ params }: { params: Promise<{ artist: s
                         { linkData.map((link) => {
                             const platform = platformOptions.find(p => p.value === link.platform_name);
                             return (
-                                <Link href={ link.url } target="_blank" rel="noopener noreferrer">
+                                <Link key={link.platform_name} href={ link.url } target="_blank" rel="noopener noreferrer">
                                     { platform?.icon &&
                                         <Image src={ platform.icon } alt={ platform.label } height={ 24 } width={ 24 }
                                                className="dark:invert"/> }

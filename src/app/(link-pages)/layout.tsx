@@ -1,9 +1,5 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import "../globals.css";
-import { User } from "@/components/user";
-import { Toaster } from "@/components/ui/sonner";
-import { Music } from "lucide-react";
-import Link from "next/link";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
