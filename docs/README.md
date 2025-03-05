@@ -1,210 +1,362 @@
 # Software Architektur
 
-## 1. Einführung und Ziele
 
-### Aufgabenstellung
+## Lösungsstrategie
 
-### Qualitätsziele
+siehe [Projektbeschrieb](../README.md)
 
-### Stakeholder
+## Bausteinsicht
 
-| Rolle        | Kontakt        | Erwartungshaltung |
-|--------------|----------------|-------------------|
-| *\<Rolle-1>* | *\<Kontakt-1>* | *\<Erwartung-1>*  |
-| *\<Rolle-2>* | *\<Kontakt-2>* | *\<Erwartung-2>*  |
+![Bausteinansicht](./images/Bausteinansicht.png)
 
-## 2. Randbedingungen
+### System
 
-## 3. Kontextabgrenzung
+Das gesamthafte System basiert auf Next.js und Next.js App Router (Serverless) und wird auf Vercel gehostet.
 
-### Fachlicher Kontext
+### Frontend
 
-**\<Diagramm und/oder Tabelle>**
+Das Frotend ist in 3 "Kategorien" aufgeteilt:
 
-**\<optional: Erläuterung der externen fachlichen Schnittstellen>**
+- Authentication (und Landing Page): Zuständig für den initialen Eintritt
+- Dashboard: Oberfläche für die Administrierung der Songs, Artists, etc.
+- Link Pages: Die öffentlich zugänglichen Pages.
 
-### Technischer Kontext
+### Backend
 
-**\<Diagramm oder Tabelle>**
+Das Backend basiert auf Next.js App Router und funktioniert "serverless". Die APIs werden automatisch von Next.js/Vercel im Hintergrund erstellt. \
 
-**\<optional: Erläuterung der externen technischen Schnittstellen>**
+### Supabase Auth
 
-**\<Mapping fachliche auf technische Schnittstellen>**
+Zuständig für die Authentifizierung und Sessions.
 
-## 4. Lösungsstrategie
+### Database
 
-## 5. Bausteinsicht
+Zuständig für die Speicherung der Daten.
 
-### Whitebox Gesamtsystem
+## Laufzeitsicht
 
-***\<Übersichtsdiagramm>***
+![Sequenzdiagramm](images/Sequenzdiagramm.png)
 
-Begründung  
-*\<Erläuternder Text>*
+Der Prozess zur Erstellung von Songs, Song Links, Artists und Artist Links sind alle ähnlich, weswegen nur 1 Diagramm erstellt wurde. \
+Sie zeigt auf, wie ein solches Element erstellt wird und wie die Abfragen im Hintergrund ablaufen.
 
-Enthaltene Bausteine  
-*\<Beschreibung der enthaltenen Bausteine (Blackboxen)>*
 
-Wichtige Schnittstellen  
-*\<Beschreibung wichtiger Schnittstellen>*
+## Verteilungssicht
 
-#### \<Name Blackbox 1>
+![Verteilungssicht.png](images/Verteilungssicht.png)
 
-*\<Zweck/Verantwortung>*
+Sowohl Frontend als auch Backend wird auf Vercel gehostet. Dabei wird Next.js und Next.js App Router genutzt. \
+Dies bietet ein gesamtheitliches und einfaches System, um die Webapplikation zu hosten.
 
-*\<Schnittstelle(n)>*
+Für eine saubere Authentifizierung wird Supabase Auth genutzt, welches sich sehr einfach mit Next.js integrieren lässt. \
+Dasselbe gilt für den Storage, bei dem auf Supabase PostgreSQL Datenbanken zurückgegriffen wird.
+
+## Querschnittliche Konzepte
 
-*\<(Optional) Qualitäts-/Leistungsmerkmale>*
-
-*\<(Optional) Ablageort/Datei(en)>*
-
-*\<(Optional) Erfüllte Anforderungen>*
-
-*\<(optional) Offene Punkte/Probleme/Risiken>*
-
-#### \<Name Blackbox 2>
-
-*\<Blackbox-Template>*
-
-#### \<Name Blackbox n>
-
-*\<Blackbox-Template>*
-
-#### \<Name Schnittstelle 1>
-
-…
-
-#### \<Name Schnittstelle m>
-
-### Ebene 2
-
-#### Whitebox *\<Baustein 1>*
-
-*\<Whitebox-Template>*
-
-#### Whitebox *\<Baustein 2>*
-
-*\<Whitebox-Template>*
-
-…
-
-#### Whitebox *\<Baustein m>*
-
-*\<Whitebox-Template>*
-
-### Ebene 3
-
-#### Whitebox \<\_Baustein x.1\_\>
-
-*\<Whitebox-Template>*
-
-#### Whitebox \<\_Baustein x.2\_\>
-
-*\<Whitebox-Template>*
-
-#### Whitebox \<\_Baustein y.1\_\>
-
-*\<Whitebox-Template>*
-
-## 6. Laufzeitsicht
-
-### *\<Bezeichnung Laufzeitszenario 1>*
-
--   \<hier Laufzeitdiagramm oder Ablaufbeschreibung einfügen>
-
--   \<hier Besonderheiten bei dem Zusammenspiel der Bausteine in diesem
-    Szenario erläutern>
-
-### *\<Bezeichnung Laufzeitszenario 2>*
-
-…
-
-### *\<Bezeichnung Laufzeitszenario n>*
-
-…
-
-## 7. Verteilungssicht
-
-### Infrastruktur Ebene 1
-
-***\<Übersichtsdiagramm>***
-
-Begründung  
-*\<Erläuternder Text>*
-
-Qualitäts- und/oder Leistungsmerkmale  
-*\<Erläuternder Text>*
-
-Zuordnung von Bausteinen zu Infrastruktur  
-*\<Beschreibung der Zuordnung>*
-
-### Infrastruktur Ebene 2
-
-#### *\<Infrastrukturelement 1>*
-
-*\<Diagramm + Erläuterungen>*
-
-#### *\<Infrastrukturelement 2>*
-
-*\<Diagramm + Erläuterungen>*
-
-…
-
-#### *\<Infrastrukturelement n>*
-
-*\<Diagramm + Erläuterungen>*
-
-## 8. Querschnittliche Konzepte
-
-### *\<Konzept 1>*
-
-*\<Erklärung>*
-
-### *\<Konzept 2>*
-
-*\<Erklärung>*
-
-…
-
-### *\<Konzept n>*
-
-*\<Erklärung>*
-
-## 9. Architekturentscheidungen
-
-## 10. Qualitätsanforderungen
-
-<div class="formalpara-title">
-
-**Weiterführende Informationen**
-
-</div>
-
-Siehe [Qualitätsanforderungen](https://docs.arc42.org/section-10/) in
-der online-Dokumentation (auf Englisch!).
-
-### Qualitätsbaum
-
-### Qualitätsszenarien
-
-## 11. Risiken und technische Schulden
-
-## 12. Glossar
-
-| Begriff        | Definition        |
-|----------------|-------------------|
-| *\<Begriff-1>* | *\<Definition-1>* |
-| *\<Begriff-2*  | *\<Definition-2>* |
-
-
-#
-
-**Über arc42**
-
-arc42, das Template zur Dokumentation von Software- und
-Systemarchitekturen.
-
-Template Version 8.2 DE. (basiert auf AsciiDoc Version), Januar 2023
-
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
-contributors. Siehe <https://arc42.org>.
+### Security
+
+Der Web-Applikation wird auf Vercel gehostet, welche via HTTPS abgesichert ist (Transportsicherheit).
+Authentifizierung wird über Supabase Auth geregelt, welche eine korrekt Nutzung und Speicherung sicherstellt.
+
+Ebenfalls ist die Datenbank via Row Level Security abgesichert, so dass folgende Policies eingehalten werden müssen:
+
+```sql
+-- Policies
+
+-- artist_links
+CREATE POLICY "Select for public"
+ON artist_links
+AS PERMISSIVE
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Insert for manager role"
+ON artist_links
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK ( 
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "Update for manager role"
+ON artist_links
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "Delete for manager role"
+ON artist_links
+AS PERMISSIVE
+FOR DELETE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "All for admin role" 
+ON artist_links
+AS PERMISSIVE
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'admin'::role_enum))
+  )
+);
+
+
+-- artists
+CREATE POLICY "Select for public"
+ON artists
+AS PERMISSIVE
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Insert for authenticated"
+ON artists
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+CREATE POLICY "Update based on created_by"
+ON artists
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+WITH CHECK (
+  (select auth.uid()) = created_by
+);
+
+CREATE POLICY "Delete baesd on created_by"
+ON artists
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+WITH CHECK (
+  (select auth.uid()) = created_by
+);
+
+CREATE POLICY "All for admin role" 
+ON artists
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'admin'::role_enum))
+  )
+);
+
+-- song_links
+CREATE POLICY "Read for public"
+ON song_links
+AS PERMISSIVE
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Insert based on created_by"
+ON song_links
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK ((select auth.uid()) = (select created_by from songs where id = song_id));
+
+CREATE POLICY "Update based on created_by"
+ON song_links
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING ((select auth.uid()) = (select created_by from songs where id = song_id));
+
+CREATE POLICY "Update for manager role"
+ON song_links
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "Insert for manager role"
+ON song_links
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK ( 
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "All for admin role" 
+ON song_links
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'admin'::role_enum))
+  )
+);
+
+-- songs
+CREATE POLICY "Read for public"
+ON songs
+AS PERMISSIVE
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Insert for authenticated"
+ON songs
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+CREATE POLICY "Update based on created_by"
+ON songs
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING ((select auth.uid()) = created_by);
+
+CREATE POLICY "Update for manager role"
+ON songs
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "Allow all for admin role" 
+ON songs
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'admin'::role_enum))
+  )
+);
+
+
+-- songs_artists
+CREATE POLICY "Read for public"
+ON songs_artists
+AS PERMISSIVE
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Insert for authenticated"
+ON songs_artists
+AS PERMISSIVE
+FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+CREATE POLICY "Update based on created_by"
+ON songs_artists
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING ((select created_by from songs where id = song_id) = (select auth.uid()));
+
+CREATE POLICY "Update for manager role"
+ON songs_artists
+AS PERMISSIVE
+FOR UPDATE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE (users.id = (select auth.uid()) 
+      AND (users.role = 'manager'::role_enum))
+  )
+);
+
+CREATE POLICY "Allow all for admin role" 
+ON songs_artists
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+      AND (users.role = 'admin'::role_enum))
+  )
+);
+
+-- users
+CREATE POLICY "Allow all for admin role" 
+ON users
+FOR ALL
+TO authenticated 
+USING (
+  EXISTS (
+    SELECT 1 
+    FROM users 
+    WHERE ((users.id = (select auth.uid() AS uid)) 
+    AND (users.role = 'admin'::role_enum))
+  )
+);
+```
+
+## Architekturentscheidungen
+
+* Hosting via Vercel (Next.js + Next.js App Router)
+* Authentifizierung via Supabase Auth
+* Storage via Supabase Storage
+
+## Qualitätsanforderungen
+
+siehe [Projektbeschrieb](../README.md#qualitätsanforderungen)

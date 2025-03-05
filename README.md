@@ -1,5 +1,7 @@
 # WEBLAB Projekt HS24: "Songlinks"
 
+Direktlinks: [Fazit & Arbeitsjournal](./docs/ERGEBNISSE.md) | [Architekturdokumentation](./docs/README.md) | [Demo-Website](https://weblab-projekt-two.vercel.app/) (`demo:weblab.F25!`)
+
 Für das WEBLAB Modul im HS24 wird ein eigenes Projekt "Songlinks" durchgeführt.
 
 ## Kontext
@@ -116,7 +118,7 @@ Als User, Manager oder Admin kann ich beim Erfassen eines neuen Songs die Detail
 - Streaming-Links können via externer API abgerufen und abgefüllt werden.
 - Abgefüllte Inhalte können überschrieben werden.
 
-### User Story 10: Audit Logging (Must)
+### User Story 10: Audit Logging (Could)
 
 Als Admin kann ich einsehen, wer welche Aktionen ausführt, damit ich Änderungen nachvollziehen kann.
 
