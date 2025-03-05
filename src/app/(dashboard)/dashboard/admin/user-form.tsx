@@ -143,7 +143,6 @@ export default function UserForm({ user, edit, setOpen }: { user?: UserItem, edi
                                 <Input
                                     type="password"
                                     placeholder="Enter a password"
-                                    required
                                     disabled={ loading }
                                     { ...field }
                                 />
@@ -163,7 +162,6 @@ export default function UserForm({ user, edit, setOpen }: { user?: UserItem, edi
                                 <Input
                                     type="password"
                                     placeholder="Confirm password"
-                                    required
                                     disabled={ loading }
                                     { ...field }
                                 />
