@@ -49,15 +49,11 @@ export const updateSession = async (request: NextRequest) => {
       const {data: userRole } = await supabase.from('users').select('role').eq('id', user.data.user.id).single();
 
       if (request.nextUrl.pathname.startsWith("/dashboard/artists") && userRole && userRole.role !== "manager" && userRole.role !== "admin") {
-        if (request.nextUrl.pathname === "/") {
-          return NextResponse.redirect(new URL("/dashboard", request.url));
-        }
+        return NextResponse.redirect(new URL("/dashboard", request.url));
       }
 
       if (request.nextUrl.pathname.startsWith("/dashboard/admin") && userRole && userRole.role !== "admin") {
-        if (request.nextUrl.pathname === "/") {
-          return NextResponse.redirect(new URL("/dashboard", request.url));
-        }
+        return NextResponse.redirect(new URL("/dashboard", request.url));
       }
 
       if (request.nextUrl.pathname === "/") {
