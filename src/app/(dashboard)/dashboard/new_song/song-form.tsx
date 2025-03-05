@@ -189,7 +189,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                             <FormControl>
                                 <Input
                                     placeholder="Enter song title"
-                                    disabled={ loading || userId != song?.created_by.id }
+                                    disabled={ loading }
                                     { ...field }
                                 />
                             </FormControl>
@@ -208,7 +208,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                             <FormControl>
                                 <Input
                                     placeholder="Album name"
-                                    disabled={ loading || userId != song?.created_by.id }
+                                    disabled={ loading }
                                     { ...field }
                                 />
                             </FormControl>
@@ -226,7 +226,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                             <FormLabel>Cover Image URL (optional)</FormLabel>
                             <FormControl>
                                 <Input
-                                    disabled={ loading || userId != song?.created_by.id }
+                                    disabled={ loading }
                                     placeholder="https://..."
                                     { ...field }
                                 />
@@ -248,7 +248,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                                     <FormControl>
                                         <Button
                                             variant={ "outline" }
-                                            disabled={ loading || userId != song?.created_by.id }
+                                            disabled={ loading }
                                             className={ cn(
                                                 "w-full h-10 text-left font-normal",
                                                 !field.value && "text-muted-foreground"
@@ -289,7 +289,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                             <MultipleSelector
                                 { ...field }
                                 key={ artistOptions.length }
-                                disabled={ loading || userId != song?.created_by.id }
+                                disabled={ loading }
                                 className="h-10"
                                 defaultOptions={ loading ? [] : artistOptions }
                                 placeholder={ loading ? "Fetching artists...." : "Type in the artist(s)..." }
@@ -306,7 +306,7 @@ export default function SongForm({ song, edit = false }: { song?: SongItem, edit
                 />
 
                 {/* Submit Button */ }
-                <Button disabled={ loading || userId != song?.created_by.id } type="submit" className="w-full">
+                <Button disabled={ loading } type="submit" className="w-full">
                     { song ? "Save" : "Submit" }
                 </Button>
             </form>
