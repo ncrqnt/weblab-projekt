@@ -46,7 +46,7 @@ export default async function DashboardPage() {
                 </TabsList>
                 <div className="ml-auto flex items-center gap-2">
                     <Button size="sm" className="h-8 gap-1" asChild>
-                        <Link href="/dashboard/new_song"><PlusCircle className="h-3.5 w-3.5"/>Add Song Link</Link>
+                        <Link href="/dashboard/new_song"><PlusCircle className="h-3.5 w-3.5"/>Add Song</Link>
                     </Button>
                 </div>
             </div>

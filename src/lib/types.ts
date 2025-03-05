@@ -34,3 +34,12 @@ export type UserItem = {
     created_by: { id: string, name: string },
     inAuth: boolean,
 }
+
+export type ArtistItem = {
+    id: string,
+    name: string,
+    slug: string,
+    profile_picture: string,
+    created_at: string,
+    created_by: { id: string, name: string },
+}

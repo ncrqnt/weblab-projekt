@@ -27,7 +27,7 @@ export default async function SongEditPage({ params }: { params: Promise<{ song:
 
 
     return (
-        <>
+        <div className="flex flex-col gap-4">
             <Card>
                 <CardHeader>
                     <CardTitle>Song Details</CardTitle>
@@ -50,6 +50,6 @@ export default async function SongEditPage({ params }: { params: Promise<{ song:
                     <SongLinksForm songId={ song } existingLinks={ linkData } />
                 </CardContent>
             </Card>
-        </>
+        </div>
     );
 }

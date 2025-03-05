@@ -5,13 +5,9 @@ import {
     Home,
     LineChart,
     ListMusic,
-    MicVocal, Music, Music2,
-    Package,
-    Package2,
+    MicVocal, Music,
     PanelLeft,
     Settings,
-    ShoppingCart,
-    Users2
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -20,13 +16,14 @@ import { NavItem } from "@/components/nav-item";
 import { User } from "@/components/user";
 import { Toaster } from "@/components/ui/sonner";
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <TooltipProvider>
             <main className="flex min-h-screen w-full flex-col items-center sm:pl-14">
                 <DesktopNav/>
                 <div className="flex-1 w-full flex flex-col items-center bg-background">
-                    <header className="sticky top-0 w-full flex justify-center border-b border-b-foreground/10 h-16 bg-background z-50">
+                    <header
+                        className="sticky top-0 w-full flex justify-center border-b border-b-foreground/10 h-16 bg-background z-50">
                         <div className="w-full flex justify-between items-center p-3 px-5 text-sm">
                             <div className="flex gap-5 items-center font-semibold">
                                 <MobileNav/>
@@ -35,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                                 <span>Songlinks</span>
                             </div>
                             <div className="flex gap-5 items-center">
-                                <ThemeSwitcher />
+                                <ThemeSwitcher/>
                                 <User/>
                             </div>
                         </div>
@@ -58,7 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     </p>
                 </footer>
             </main>
-            <Toaster />
+            <Toaster/>
         </TooltipProvider>
     );
 }
@@ -108,46 +105,32 @@ function MobileNav() {
             <SheetContent side="left" className="sm:max-w-xs">
                 <nav className="grid gap-6 text-lg font-medium">
                     <Link
-                        href="#"
-                        className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                        href="/"
+                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                     >
-                        <Package2 className="h-5 w-5 transition-all group-hover:scale-110"/>
-                        <span className="sr-only">Vercel</span>
+                        <Music className="h-4 w-4 transition-all group-hover:scale-110"/>
+                        <span className="sr-only">Songlinks</span>
                     </Link>
                     <Link
-                        href="#"
+                        href="/dashboard"
                         className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     >
-                        <Home className="h-5 w-5"/>
-                        Dashboard
+                        <ListMusic className="h-5 w-5"/>
+                        Songs
                     </Link>
                     <Link
-                        href="#"
+                        href="/dashboard/artists"
                         className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     >
-                        <ShoppingCart className="h-5 w-5"/>
-                        Orders
-                    </Link>
-                    <Link
-                        href="#"
-                        className="flex items-center gap-4 px-2.5 text-foreground"
-                    >
-                        <Package className="h-5 w-5"/>
-                        Products
-                    </Link>
-                    <Link
-                        href="#"
-                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                    >
-                        <Users2 className="h-5 w-5"/>
-                        Customers
+                        <MicVocal className="h-5 w-5"/>
+                        Artists
                     </Link>
                     <Link
                         href="#"
                         className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     >
                         <LineChart className="h-5 w-5"/>
-                        Settings
+                        Admin Area
                     </Link>
                 </nav>
             </SheetContent>
