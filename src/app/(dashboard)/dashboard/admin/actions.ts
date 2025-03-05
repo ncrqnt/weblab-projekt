@@ -36,3 +36,14 @@ export async function createUser(values: z.infer<ReturnType<typeof userSchema>>)
     revalidatePath("/dashboard/admin");
     return { data: data, error: error };
 }
+
+export async function deleteUserById(id: string) {
+    const supabaseAdmin = await createAdminClient();
+
+    try {
+        await supabaseAdmin.auth.admin.deleteUser(id);
+    }
+    catch (error: any) {
+        throw new Error(error);
+    }
+}

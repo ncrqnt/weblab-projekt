@@ -25,13 +25,14 @@ import {
 import UserForm from "@/app/(dashboard)/dashboard/admin/user-form";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { deleteUserById } from "@/app/(dashboard)/dashboard/admin/actions";
 
 export function UsersTableItem({ user, currentUser }: { user: UserItem, currentUser: string }) {
     const [open, setOpen] = useState(false);
 
     function deleteUser(id: string) {
         try {
-            // void deleteItem(id);
+            void deleteUserById(id);
             toast.success("Song deleted successfully.");
         } catch (error: any) {
             toast.error("Failed to delete song.", error.message);
