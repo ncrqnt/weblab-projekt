@@ -1,48 +1,35 @@
-import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
 import { createClient } from "@/utils/supabase/server";
-import { InfoIcon, PlusCircle } from "lucide-react";
 import { redirect } from "next/navigation";
-import { SongsTable } from "@/app/(dashboard)/dashboard/songs-table";
-import { SongItem } from "@/app/(dashboard)/dashboard/song";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { ArtistItem } from "@/lib/types";
+import { ArtistsTable } from "@/app/(dashboard)/dashboard/artists/artists-table";
 
-export default async function DashboardPage(
-    props: {
-        searchParams: Promise<{ page: number }>;
-    }
-) {
+export default async function ArtistsPage() {
     const supabase = await createClient();
-    const { page = 1 } = await props.searchParams;
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+    // Get session data
+    const { data: { user } } = await supabase.auth.getUser();
 
-    let songs;
+    if (!user) {
+        redirect(`/sign-in`);
+    }
+
+    const { data: userData, error: userError } = await supabase.from('users').select('id, user_name, role').eq("id", user.id).single();
+    if (userError) return <p className="text-red-500">Failed to load user data: { userError.message }</p>;
+
+    // Query data
+    const { data, error } = await supabase
+        .from('artists_data')
+        .select('*')
+        .order("name", { ascending: true }
+        );
+
+
+    if (error) return <p className="text-red-500">Failed to load songs: { error.message }</p>;
+
+    // Map data
+    const tableData: ArtistItem[] = data;
 
     return (
-        <Tabs defaultValue="all">
-            <div className="flex items-center mb-2">
-                <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="owned">Owned</TabsTrigger>
-                </TabsList>
-                <div className="ml-auto flex items-center gap-2">
-                    <Button size="sm" className="h-8 gap-1">
-                        <PlusCircle className="h-3.5 w-3.5"/>
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                          Add Song Link
-                        </span>
-                    </Button>
-                </div>
-            </div>
-            <TabsContent value="all">
-                <SongsTable page={ page } owned={false} />
-            </TabsContent>
-            <TabsContent value="owned">
-                <SongsTable page={page} owned={true}/>
-            </TabsContent>
-        </Tabs>
+        <ArtistsTable artists={ tableData } currentUser={ userData }/>
     );
 }
