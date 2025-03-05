@@ -6,7 +6,7 @@ const userIds = [
     '342276ae-4633-476f-b431-e963f30c6f54',
     '6df28897-8b52-4142-99f6-093ee6b0dc11'
 ];
-const newSongs: { id: string; title: string; }[] = [];
+const newSongs: { id: string, title: string, slug: string }[] = [];
 const newArtists: { id: string, name: string }[] = [];
 
 function genUniqueSong() {
@@ -16,8 +16,9 @@ function genUniqueSong() {
         title = faker.music.songName();
     } while (newSongs.some(song => song.id === id || song.title === title));
 
-    newSongs.push({ id, title });
-    return { id: id, title: title };
+    const slug = generateSlug(title);
+    newSongs.push({ id, title, slug });
+    return { id: id, title: title, slug: generateSlug(title) };
 }
 
 function genUniqueArtist() {
@@ -42,7 +43,7 @@ export async function GET() {
         await supabase.from('songs').insert({
             id: song.id,
             title: song.title,
-            slug: generateSlug(song.title),
+            slug: song.slug,
             album: faker.helpers.arrayElement([null, faker.music.album()]),
             created_by: creator
         });
@@ -62,7 +63,7 @@ export async function GET() {
             const randArtist = faker.helpers.arrayElement(newArtists);
             await supabase.from('songs_artists').insert({
                 song_id: song.id,
-                song_title: song.title,
+                song_slug: song.slug,
                 artist_id: randArtist.id
             });
         }
